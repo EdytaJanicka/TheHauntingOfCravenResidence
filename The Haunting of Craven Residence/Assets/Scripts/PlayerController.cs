@@ -20,16 +20,7 @@ public class PlayerController : MonoBehaviour
         if (moving == true)
         {
 
-            if (horizontal == true)
-            {
                 controller.Move(transform.right * hInput * speed * Time.deltaTime);
-
-            }
-
-            if (vertical == true)
-            {
-                controller.Move(transform.right * hInput * speed * Time.deltaTime);
-            }
 
         }
 

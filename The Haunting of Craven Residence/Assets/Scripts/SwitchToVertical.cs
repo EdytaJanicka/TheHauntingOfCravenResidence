@@ -8,19 +8,25 @@ public class SwitchToVertical : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Invoke("ChangePosition1", 0.05f) ;
+
+    }
+
+    private void ChangePosition1()
+    {
         if (player.horizontal == false)
         {
             player.vertical = false;
             player.StartRotation2();
             player.horizontal = true;
         }
-              else if (player.horizontal == true)
+        else if (player.horizontal == true)
         {
             player.vertical = true;
             player.StartRotation();
             player.horizontal = false;
         }
- 
     }
+
 
 }
