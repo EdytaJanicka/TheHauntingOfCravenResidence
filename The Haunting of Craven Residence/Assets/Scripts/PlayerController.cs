@@ -10,17 +10,53 @@ public class PlayerController : MonoBehaviour
     public bool horizontal = true;
     public bool vertical = false;
     public GameObject objectToRotate;
+    public GameObject objectCharacter;
     private bool rotating;
+    public Animator animator;
     private bool moving = true;
-
+    private bool movingAnimation = true;
+    public float hInput;
+    float smooth = 200.0f;
+    float tiltAngle = 90.0f;
+    float tiltAngle1 = -90.0f;
+    float tiltAroundY;
     void Update()
     {
-        float hInput = Input.GetAxis("Horizontal");
+        
+        if(horizontal == true)
+        {
+             tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
+        }
+        else
+        {
+             tiltAroundY = Input.GetAxis("objectCharacter") * tiltAngle1;
+            
+        }
+        Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
+
+        hInput = Input.GetAxis("Horizontal");
+        if(hInput < 0)
+        {
+            objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+        }
+        if (hInput > 0)
+        {
+            objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+        }
+        
 
         if (moving == true)
         {
+            if( hInput != 0)
+            {
+                animator.SetBool("isWalking", true);
 
-                controller.Move(transform.right * hInput * speed * Time.deltaTime);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
+            controller.Move(transform.right * hInput * speed * Time.deltaTime);
 
         }
 
@@ -74,6 +110,7 @@ public class PlayerController : MonoBehaviour
     public void StopMoving()
     {
         moving = false;
+        animator.SetBool("isWalking", false);
     }
     public void StartMoving()
     {
