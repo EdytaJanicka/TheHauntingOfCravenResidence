@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-             tiltAroundY = Input.GetAxis("objectCharacter") * tiltAngle1;
+             tiltAroundY = Input.GetAxis("objectCharacter") * tiltAngle;
             
         }
         Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
