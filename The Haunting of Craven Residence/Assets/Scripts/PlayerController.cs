@@ -14,36 +14,25 @@ public class PlayerController : MonoBehaviour
     private bool rotating;
     public Animator animator;
     private bool moving = true;
-    private bool movingAnimation = true;
     public float hInput;
-    float smooth = 200.0f;
-    float tiltAngle = 90.0f;
-    float tiltAngle1 = -90.0f;
-    float tiltAroundY;
     void Update()
     {
         
-        if(horizontal == true)
-        {
-             tiltAroundY = Input.GetAxis("Horizontal") * tiltAngle;
-        }
-        else
-        {
-             tiltAroundY = Input.GetAxis("objectCharacter") * tiltAngle;
-            
-        }
-        Quaternion target = Quaternion.Euler(0, tiltAroundY, 0);
-
         hInput = Input.GetAxis("Horizontal");
-        if(hInput < 0)
+        Vector3 characterScale = objectCharacter.transform.localScale;
+
+        if (hInput < 0)
         {
-            objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+            characterScale.z = -1;
+            // objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
         }
         if (hInput > 0)
         {
-            objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
+            characterScale.z = 1;
+            // objectCharacter.transform.rotation = Quaternion.Slerp(transform.rotation, target, Time.deltaTime * smooth);
         }
-        
+
+        objectCharacter.transform.localScale = characterScale;
 
         if (moving == true)
         {
