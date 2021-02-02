@@ -5,10 +5,11 @@ using UnityEngine;
 public class LightEffectOnObjects : MonoBehaviour
 {
     public CanvasGroup Panel1;
-
+    public GameObject EButton;
+    public bool isInField = false;
     void Start()
     {
-        
+        EButton.SetActive(false);
     }
 
     //public void FadeOut()
@@ -41,10 +42,17 @@ public class LightEffectOnObjects : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         StartCoroutine(FadeCanvasGroup(Panel1, Panel1.alpha, 1, .5f));
+        EButton.SetActive(true);
+        isInField = true;
+
     }
     private void OnTriggerExit(Collider other)
     {
         StartCoroutine(FadeCanvasGroup(Panel1, Panel1.alpha, 0, .5f));
+        EButton.SetActive(false);
+        isInField = true;
+
+
     }
 
 }
