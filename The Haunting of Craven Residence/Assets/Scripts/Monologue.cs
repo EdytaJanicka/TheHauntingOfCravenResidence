@@ -11,14 +11,14 @@ public class Monologue : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            //ConversationManager.Instance.StartConversation(monologue);
+            ConversationManager.Instance.StartConversation(monologue);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Vase")
         {
-            //ConversationManager.Instance.StartConversation(monologue);
+            ConversationManager.Instance.StartConversation(monologue);
             isInAField = true;
         }
     }

@@ -26,6 +26,7 @@ public class CameraHandler : MonoBehaviour
 
 
 
+
     void Start()
     {
         characterController2.SetActive(false);
