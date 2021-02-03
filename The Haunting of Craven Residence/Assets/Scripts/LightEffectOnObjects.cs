@@ -48,11 +48,17 @@ public class LightEffectOnObjects : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        StartCoroutine(FadeCanvasGroup(Panel1, Panel1.alpha, 0, .5f));
-        EButton.SetActive(false);
-        isInField = true;
+        Fade();
 
 
     }
+
+    public void Fade()
+    {
+        StartCoroutine(FadeCanvasGroup(Panel1, Panel1.alpha, 0, .5f));
+        EButton.SetActive(false);
+        isInField = false;
+    }
+
 
 }

@@ -28,7 +28,7 @@ public class GoUpstairs : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         EButton.SetActive(false);
-        isInField = true;
+        isInField = false;
 
 
     }
