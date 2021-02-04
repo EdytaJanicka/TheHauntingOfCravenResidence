@@ -1,11 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueEditor;
 
 
 
 public class CameraHandler : MonoBehaviour
 {
+    public NPCConversation monologue;
+    public NPCConversation monologue1;
+    public NPCConversation monologue2;
+    public NPCConversation monologue3;
+
+
     public GameObject characterController1;
     public GameObject characterController2;
 
@@ -14,6 +21,11 @@ public class CameraHandler : MonoBehaviour
     public Camera thirdFlashback;
     public Camera fourthFlashback;
     public Camera fifthFlashback;
+    public Camera sixthFlashback;
+    public Camera seventhFlashback;
+
+    private int story = 0;
+
 
     public GoUpstairs upStairs;
     public GoDownstairs downStairs;
@@ -22,10 +34,18 @@ public class CameraHandler : MonoBehaviour
     public LightEffectOnObjects sweep;
     public LightEffectOnObjects pearls;
     public LightEffectOnObjects bible;
+    public LightEffectOnObjects sabre;
+
+    public Animator kiss1;
+    public Animator kiss2;
+    public Animator kiss3;
+    public Animator kiss4;
+
     public GameObject wallHack;
+    public GameObject wallHack1;
 
-
-
+    public bool haveKnob = false;
+    public GameObject Knob;
 
     void Start()
     {
@@ -35,6 +55,10 @@ public class CameraHandler : MonoBehaviour
         thirdFlashback.enabled = false;
         fourthFlashback.enabled = false;
         fifthFlashback.enabled = false;
+        sixthFlashback.enabled = false;
+        seventhFlashback.enabled = false;
+        wallHack1.SetActive(false);
+        Knob.SetActive(false);
     }
 
     void Update()
@@ -45,6 +69,8 @@ public class CameraHandler : MonoBehaviour
             characterController1.SetActive(false);
             upStairs.isInField = false;
             wallHack.SetActive(false);
+            wallHack1.SetActive(true);
+
         }
 
 
@@ -54,52 +80,83 @@ public class CameraHandler : MonoBehaviour
             characterController1.SetActive(true);
             downStairs.isInField = false;
             wallHack.SetActive(true);
+            wallHack1.SetActive(false);
+
 
         }
 
-        if (vase.isInField == true && Input.GetKeyDown(KeyCode.E))
+        if (vase.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 0)
         {
             characterController1.SetActive(false);
             firstFlashback.enabled = true;
             vase.isInField = false;
             vase.EButton.SetActive(false);
-            Invoke("DisableFirstFlashback", 2f);
+            ConversationManager.Instance.StartConversation(monologue);
+            Invoke("DisableFirstFlashback", 18f);
+            story++;
         }
 
-        if (brooch.isInField == true && Input.GetKeyDown(KeyCode.E))
+        if (brooch.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 1)
         {
             characterController1.SetActive(false);
             secondFlashback.enabled = true;
             brooch.isInField = false;
             brooch.EButton.SetActive(false);
-            Invoke("DisableSecondFlashback", 2f);
+            ConversationManager.Instance.StartConversation(monologue1);
+            Invoke("DisableSecondFlashback", 18f);
+            story++;
+            kiss1.SetTrigger("Play");
+
         }
 
-        if (sweep.isInField == true && Input.GetKeyDown(KeyCode.E))
+        if (sweep.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 2)
         {
             characterController1.SetActive(false);
             thirdFlashback.enabled = true;
             sweep.isInField = false;
             sweep.EButton.SetActive(false);
             Invoke("DisableThirdFlashback", 2f);
+            story++;
+            kiss2.SetTrigger("Play");
+
+
         }
 
-        if (pearls.isInField == true && Input.GetKeyDown(KeyCode.E))
+        if (pearls.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 3)
         {
             characterController2.SetActive(false);
             fourthFlashback.enabled = true;
             pearls.isInField = false;
             pearls.EButton.SetActive(false);
             Invoke("DisableFourthFlashback", 2f);
+            story++;
+            kiss3.SetTrigger("Play");
+            kiss4.SetTrigger("Play");
+
         }
 
-        if (bible.isInField == true && Input.GetKeyDown(KeyCode.E))
+        if (bible.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 4)
         {
             characterController2.SetActive(false);
             fifthFlashback.enabled = true;
             bible.isInField = false;
             bible.EButton.SetActive(false);
             Invoke("DisableFifthFlashback", 2f);
+            story++;
+            haveKnob = true;
+            Knob.SetActive(true);
+
+        }
+
+        if (sabre.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 5)
+        {
+            characterController2.SetActive(false);
+            sixthFlashback.enabled = true;
+            sabre.isInField = false;
+            sabre.EButton.SetActive(false);
+            Invoke("DisableSixthFlashback", 2f);
+            story++;
+
         }
 
     }
@@ -142,6 +199,14 @@ public class CameraHandler : MonoBehaviour
         fifthFlashback.enabled = false;
         bible.GetComponent<SphereCollider>().enabled = false;
         bible.Fade();
+    }
+
+    private void DisableSixthFlashback()
+    {
+        characterController2.SetActive(true);
+        sixthFlashback.enabled = false;
+        sabre.GetComponent<SphereCollider>().enabled = false;
+        sabre.Fade();
     }
 
 }

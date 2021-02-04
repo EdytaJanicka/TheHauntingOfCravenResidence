@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     private bool moving = true;
     public float hInput;
+
+    public AudioSource audio1;
     void Update()
     {
         
@@ -48,7 +50,10 @@ public class PlayerController : MonoBehaviour
             controller.Move(transform.right * hInput * speed * Time.deltaTime);
 
         }
-
+        if (Input.GetButtonDown("Horizontal") || Input.GetButtonDown("Vertical"))
+            audio1.Play();
+        else if (!Input.GetButton("Horizontal") && !Input.GetButton("Vertical") && audio1.isPlaying)
+            audio1.Stop(); 
     }
 
     
