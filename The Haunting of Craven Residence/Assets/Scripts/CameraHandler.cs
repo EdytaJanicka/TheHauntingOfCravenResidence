@@ -11,6 +11,9 @@ public class CameraHandler : MonoBehaviour
     public NPCConversation monologue1;
     public NPCConversation monologue2;
     public NPCConversation monologue3;
+    public NPCConversation monologue4;
+    public NPCConversation monologue5;
+    public NPCConversation monologue6;
 
 
     public GameObject characterController1;
@@ -114,8 +117,9 @@ public class CameraHandler : MonoBehaviour
             characterController1.SetActive(false);
             thirdFlashback.enabled = true;
             sweep.isInField = false;
+            ConversationManager.Instance.StartConversation(monologue2);
             sweep.EButton.SetActive(false);
-            Invoke("DisableThirdFlashback", 2f);
+            Invoke("DisableThirdFlashback", 20f);
             story++;
             kiss2.SetTrigger("Play");
 
@@ -128,7 +132,8 @@ public class CameraHandler : MonoBehaviour
             fourthFlashback.enabled = true;
             pearls.isInField = false;
             pearls.EButton.SetActive(false);
-            Invoke("DisableFourthFlashback", 2f);
+            ConversationManager.Instance.StartConversation(monologue3);
+            Invoke("DisableFourthFlashback", 20f);
             story++;
             kiss3.SetTrigger("Play");
             kiss4.SetTrigger("Play");
@@ -140,8 +145,9 @@ public class CameraHandler : MonoBehaviour
             characterController2.SetActive(false);
             fifthFlashback.enabled = true;
             bible.isInField = false;
+            ConversationManager.Instance.StartConversation(monologue4);
             bible.EButton.SetActive(false);
-            Invoke("DisableFifthFlashback", 2f);
+            Invoke("DisableFifthFlashback", 22f);
             story++;
             haveKnob = true;
             Knob.SetActive(true);
@@ -152,13 +158,24 @@ public class CameraHandler : MonoBehaviour
         {
             characterController2.SetActive(false);
             sixthFlashback.enabled = true;
+            ConversationManager.Instance.StartConversation(monologue5);
             sabre.isInField = false;
             sabre.EButton.SetActive(false);
-            Invoke("DisableSixthFlashback", 2f);
+            Invoke("DisableSixthFlashback", 20f);
             story++;
-
+            EnableSeventhFlashback();
         }
 
+        if (vase.isInField == true && Input.GetKeyDown(KeyCode.E) && story == 6)
+        {
+            characterController1.SetActive(false);
+            seventhFlashback.enabled = true;
+            vase.isInField = false;
+            vase.EButton.SetActive(false);
+            ConversationManager.Instance.StartConversation(monologue6);
+            Invoke("DisableFirstFlashback", 8f);
+            story++;
+        }
     }
 
     private void DisableFirstFlashback()
@@ -207,6 +224,11 @@ public class CameraHandler : MonoBehaviour
         sixthFlashback.enabled = false;
         sabre.GetComponent<SphereCollider>().enabled = false;
         sabre.Fade();
+    }
+
+    private void EnableSeventhFlashback()
+    {
+        vase.GetComponent<SphereCollider>().enabled = true;
     }
 
 }
